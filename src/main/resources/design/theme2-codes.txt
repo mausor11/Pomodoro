@@ -1,0 +1,11 @@
+Your selected colors:
+
+    Text: #06090a (RGB: 6, 9, 10)
+    Background: #ffffff (RGB: 255, 255, 255)
+    Primary: #774e46 (RGB: 119, 78, 70)
+    Secondary: #d1e1e6 (RGB: 209, 225, 230)
+    Accent: #946057 (RGB: 148, 96, 87)
+
+Realtime Colors link for selected colors: https://realtimecolors.com/?colors=06090a-ffffff-774e46-d1e1e6-946057
+
+Thanks for using RealtimeColors.com!

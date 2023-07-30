@@ -1,0 +1,18 @@
+
+.root {
+    /*-fx-background-color: #efe8e7;*/
+    -fx-background-color: #ffffff;
+    -fx-font-family: Dubai;
+}
+.menu {
+    -fx-border-color: #efe8e7;
+    -fx-border-width: 0 2 0 0;
+}
+.menuLabel {
+    -fx-text-fill: #06090a;
+}
+.menuLabelFocused {
+    -fx-text-fill: #946057;
+    -fx-font-weight: bold;
+
+}

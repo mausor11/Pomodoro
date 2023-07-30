@@ -1,0 +1,11 @@
+Your selected colors:
+
+    Text: #eaefe6 (RGB: 234, 239, 230)
+    Background: #171c11 (RGB: 23, 28, 17)
+    Primary: #3f4f30 (RGB: 63, 79, 48)
+    Secondary: #1e2717 (RGB: 30, 39, 23)
+    Accent: #84a268 (RGB: 132, 162, 104)
+
+Realtime Colors link for selected colors: https://realtimecolors.com/?colors=eaefe6-171c11-3f4f30-1e2717-84a268
+
+Thanks for using RealtimeColors.com!
