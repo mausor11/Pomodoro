@@ -14,5 +14,14 @@
 .menuLabelFocused {
     -fx-text-fill: #946057;
     -fx-font-weight: bold;
-
+}
+.timerLook {
+    -fx-fill: #946057;
+}
+.startButton {
+    -fx-background-color: #f4f1f0;
+    -fx-background-radius: 10;
+}
+.doneCount {
+    -fx-fill: #f4f1f0;
 }
