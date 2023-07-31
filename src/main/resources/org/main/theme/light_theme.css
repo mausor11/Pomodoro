@@ -16,10 +16,14 @@
 .timerLook {
     -fx-fill: #946057;
 }
+.backgroundPomodoro {
+    -fx-fill: rgba(148, 96, 87, 0.1);
+
+}
 .startButton {
     -fx-background-color: #f4f1f0;
     -fx-background-radius: 10;
 }
 .doneCount {
-    -fx-fill: #f4f1f0;
+    -fx-fill: rgba(148, 96, 87, 0.1);
 }
