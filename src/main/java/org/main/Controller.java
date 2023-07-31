@@ -27,8 +27,10 @@ public class Controller {
     ImageView optionsIcon;
     private int prevFocus;
     private int focusOn;
+    GridPane pomodoro;
     public void initialize() throws IOException {
-        container.add(new FXMLLoader(getClass().getResource("pomodoro.fxml")).load(), 1, 0);
+        pomodoro = new FXMLLoader(getClass().getResource("pomodoro.fxml")).load();
+        container.add(pomodoro, 1, 0);
         menuLabel.getStyleClass().remove("menuLabel");
         menuLabel.getStyleClass().add("menuLabelFocused");
         menuIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/timerF.png")).toExternalForm()));
@@ -79,7 +81,7 @@ public class Controller {
                 optionsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/settings.png")).toExternalForm()));
 
                 container.getChildren().remove(1);
-                container.add(new FXMLLoader(getClass().getResource("pomodoro.fxml")).load(), 1, 0);
+                container.add(pomodoro, 1, 0);
 
             }
             case 1 -> {

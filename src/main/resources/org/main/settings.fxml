@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+
+<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.main.SettingsPomodoro">
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -14,9 +17,11 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-        <Label text="Settings scene" GridPane.rowIndex="1">
-            <font>
-                <Font size="50.0" />
-            </font></Label>
+      <Slider fx:id="timeSlider" blockIncrement="1.0" majorTickUnit="1.0" max="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minorTickCount="50" prefHeight="33.0" prefWidth="312.0" GridPane.rowIndex="1" />
+      <Label fx:id="time" alignment="CENTER" prefHeight="114.0" prefWidth="166.0" text="25:00">
+         <font>
+            <Font name="Dubai Regular" size="40.0" />
+         </font>
+      </Label>
     </children>
 </GridPane>

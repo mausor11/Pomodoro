@@ -1,5 +1,6 @@
 package org.main;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -29,10 +30,14 @@ public class PomodoroController {
     Label clock;
     private int pomodoroCount = 0;
     private boolean isFirst = false;
-    private final int pomodoroTime = 10;
+    public static int pomodoroTime = 1800;
 
     public void initialize() {
-        setUpTimer(pomodoroTime);
+        clock.setText(PomodoroController.pomodoroTime / 60 + ":00");
+        SettingsPomodoro.actTime.textProperty().addListener((observable, oldValue, newValue) -> {
+            PomodoroController.pomodoroTime = 60 * Integer.parseInt(newValue);
+            setUpTimer(pomodoroTime);
+        });
     }
     public void startTimer(double time) {
         if(pomodoroCount == 0 && isFirst) {
@@ -106,12 +111,11 @@ public class PomodoroController {
         }
     }
     public void startClock() {
-        startTime(pomodoroTime);
-        startTimer(pomodoroTime);
+        startTime(PomodoroController.pomodoroTime);
+        startTimer(PomodoroController.pomodoroTime);
     }
     public void startTime(int time) {
         AtomicInteger k = new AtomicInteger(time - 1);
-
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             setUpTimer(k.get());
             k.getAndDecrement();
