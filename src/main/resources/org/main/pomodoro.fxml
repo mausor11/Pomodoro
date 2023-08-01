@@ -36,7 +36,17 @@
                   <Font name="Dubai Regular" size="55.0" />
                </font>
             </Label>
-            <Button fx:id="timerButton" layoutX="148.0" layoutY="236.0" mnemonicParsing="false" onAction="#startClock" prefHeight="35.0" prefWidth="95.0" styleClass="startButton" text="Start">
+            <Button fx:id="timerButton" layoutX="148.0" layoutY="237.0" mnemonicParsing="false" onAction="#startClock" prefHeight="35.0" prefWidth="96.0" styleClass="startButton" text="Start">
+               <font>
+                  <Font name="Dubai Regular" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="pauseButton" disable="true" layoutX="148.0" layoutY="237.0" mnemonicParsing="false" opacity="0.0" prefHeight="35.0" prefWidth="48.0" styleClass="startButton" text="⏸">
+               <font>
+                  <Font name="Dubai Regular" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="nextButton" disable="true" layoutX="196.0" layoutY="237.0" mnemonicParsing="false" opacity="0.0" prefHeight="35.0" prefWidth="48.0" styleClass="startButton" text="⏩">
                <font>
                   <Font name="Dubai Regular" size="18.0" />
                </font>

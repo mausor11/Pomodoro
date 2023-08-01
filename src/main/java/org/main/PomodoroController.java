@@ -26,12 +26,16 @@ public class PomodoroController {
     Circle fourthP;
     @FXML
     Label clock;
+    @FXML
+    Button pauseButton;
+    @FXML
+    Button nextButton;
     private int pomodoroCount = 0;
     private boolean isFirst = false;
     private boolean isBreak = false;
     private boolean isLongBreak = false;
-    public static int pomodoroTime = 1500;
-    public static int pomodoroBreak = 300;
+    public static int pomodoroTime = 1;
+    public static int pomodoroBreak = 1;
     public static int pomodoroLongBreak = 600;
 
     public void initialize() {
@@ -52,7 +56,8 @@ public class PomodoroController {
     }
     public void startTimer(double time) {
         if(pomodoroCount == 0 && isFirst) {
-                        timerButton.setDisable(true);
+                        showButtons(false);
+
                         timerButton.setStyle("-fx-background-color: #efe8e7");
                         Timeline timeline = new Timeline(
                                 new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 360)),
@@ -71,7 +76,7 @@ public class PomodoroController {
 
                         });
         } else {
-            timerButton.setDisable(true);
+            showButtons(false);
             timerButton.setStyle("-fx-background-color: #efe8e7");
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 360)),
@@ -102,7 +107,7 @@ public class PomodoroController {
         }
     }
     public void startBreak(double time) {
-        timerButton.setDisable(true);
+        showButtons(false);
         timerButton.setStyle("-fx-background-color: #efe8e7");
         timerLook.setStyle("-fx-fill: #fa5e42");
         Timeline timeline = new Timeline(
@@ -117,7 +122,7 @@ public class PomodoroController {
         });
     }
     public void startLongBreak(double time) {
-        timerButton.setDisable(true);
+        showButtons(false);
         timerButton.setStyle("-fx-background-color: #efe8e7");
         timerLook.setStyle("-fx-fill: #3165a0");
         Timeline timeline = new Timeline(
@@ -193,8 +198,44 @@ public class PomodoroController {
         );
         timeline.play();
         timeline.setOnFinished((finish) -> {
-            timerButton.setDisable(false);
+            showButtons(true);
         });
+    }
+    public void showButtons(boolean isStart) {
+        if(isStart) {
+            timerButton.setDisable(false);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.layoutXProperty(), 143)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.layoutXProperty(), 201)),
+
+                    new KeyFrame(Duration.millis(100), new KeyValue(timerButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.millis(100), new KeyValue(pauseButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.millis(100), new KeyValue(nextButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(pauseButton.layoutXProperty(), 148)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(nextButton.layoutXProperty(), 196))
+            );
+            timeline.play();
+        } else {
+            timerButton.setDisable(true);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.layoutXProperty(), 148)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.layoutXProperty(), 196)),
+
+                    new KeyFrame(Duration.millis(200), new KeyValue(timerButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(pauseButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(nextButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(pauseButton.layoutXProperty(), 143)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(nextButton.layoutXProperty(), 201))
+            );
+            timeline.play();
+
+        }
     }
 
 }
