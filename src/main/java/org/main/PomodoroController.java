@@ -3,6 +3,8 @@ package org.main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,9 +36,12 @@ public class PomodoroController {
     private boolean isFirst = false;
     private boolean isBreak = false;
     private boolean isLongBreak = false;
-    public static int pomodoroTime = 1;
-    public static int pomodoroBreak = 1;
+    private boolean isPaused = false;
+    private boolean isListener = false;
+    public static int pomodoroTime = 1500;
+    public static int pomodoroBreak = 300;
     public static int pomodoroLongBreak = 600;
+    Label isPause = new Label();
 
     public void initialize() {
         clock.setText(PomodoroController.pomodoroTime / 60 + ":00");
@@ -56,25 +61,26 @@ public class PomodoroController {
     }
     public void startTimer(double time) {
         if(pomodoroCount == 0 && isFirst) {
-                        showButtons(false);
+            showButtons(false);
 
-                        timerButton.setStyle("-fx-background-color: #efe8e7");
-                        Timeline timeline = new Timeline(
-                                new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 360)),
-                                new KeyFrame(Duration.seconds(time), new KeyValue(timerLook.lengthProperty(), 0))
-                        );
-                        timeline.play();
-                        timeline.setOnFinished((finish) -> {
-                            setUpTimer(pomodoroTime);
-                            resetTimer();
-                            timerButton.setStyle("-fx-background-color: #f4f1f0");
-                            pomodoroCount++;
-                            switchDone();
-                            isBreak = true;
-                            timerLook.setStyle("-fx-fill: #fa5e42");
-                            clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
+            timerButton.setStyle("-fx-background-color: #efe8e7");
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 360)),
+                    new KeyFrame(Duration.seconds(time), new KeyValue(timerLook.lengthProperty(), 0))
+            );
+            timeline.play();
+            pauseClock(timeline);
+            timeline.setOnFinished((finish) -> {
+                setUpTimer(pomodoroTime);
+                resetTimer();
+                timerButton.setStyle("-fx-background-color: #f4f1f0");
+                pomodoroCount++;
+                switchDone();
+                isBreak = true;
+                timerLook.setStyle("-fx-fill: #fa5e42");
+                clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
 
-                        });
+            });
         } else {
             showButtons(false);
             timerButton.setStyle("-fx-background-color: #efe8e7");
@@ -83,6 +89,7 @@ public class PomodoroController {
                     new KeyFrame(Duration.seconds(time), new KeyValue(timerLook.lengthProperty(), 0))
             );
             timeline.play();
+            pauseClock(timeline);
             timeline.setOnFinished((finish) -> {
                 setUpTimer(pomodoroTime);
                 resetTimer();
@@ -101,7 +108,6 @@ public class PomodoroController {
                     isBreak = true;
                     timerLook.setStyle("-fx-fill: #fa5e42");
                     clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
-
                 }
             });
         }
@@ -115,6 +121,7 @@ public class PomodoroController {
                 new KeyFrame(Duration.seconds(time), new KeyValue(timerLook.lengthProperty(), 0))
         );
         timeline.play();
+        pauseClock(timeline);
         timeline.setOnFinished((finish) -> {
             isBreak = false;
             timerLook.setStyle("-fx-fill: #946057");
@@ -130,6 +137,8 @@ public class PomodoroController {
                 new KeyFrame(Duration.seconds(time), new KeyValue(timerLook.lengthProperty(), 0))
         );
         timeline.play();
+        pauseClock(timeline);
+
         timeline.setOnFinished((finish) -> {
             isLongBreak = false;
             timerLook.setStyle("-fx-fill: #946057");
@@ -181,6 +190,8 @@ public class PomodoroController {
 
         timeline.setCycleCount(time);
         timeline.play();
+        pauseTime(timeline);
+
     }
     public void setUpTimer(int time) {
         int min = time / 60;
@@ -192,11 +203,15 @@ public class PomodoroController {
         }
     }
     public void resetTimer() {
+
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 0)),
                 new KeyFrame(Duration.millis(200), new KeyValue(timerLook.lengthProperty(), 360))
         );
         timeline.play();
+        isPaused = false;
+        isPause = new Label();
+        isListener = false;
         timeline.setOnFinished((finish) -> {
             showButtons(true);
         });
@@ -204,6 +219,8 @@ public class PomodoroController {
     public void showButtons(boolean isStart) {
         if(isStart) {
             timerButton.setDisable(false);
+            pauseButton.setDisable(true);
+            nextButton.setDisable(true);
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(timerButton.opacityProperty(), 0)),
                     new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.opacityProperty(), 1)),
@@ -220,6 +237,8 @@ public class PomodoroController {
             timeline.play();
         } else {
             timerButton.setDisable(true);
+            pauseButton.setDisable(false);
+            nextButton.setDisable(false);
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(timerButton.opacityProperty(), 1)),
                     new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.opacityProperty(), 0)),
@@ -236,6 +255,45 @@ public class PomodoroController {
             timeline.play();
 
         }
+    }
+    public void pauseClock(Timeline timeline) {
+        pauseButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(isPaused) {
+                    timeline.play();
+                    isPaused = false;
+                    isPause.setText("true");
+                    pauseButton.setStyle("-fx-background-color: #f4f1f0;");
+
+                } else {
+                    timeline.pause();
+                    isPaused = true;
+                    isPause.setText("false");
+                    pauseButton.setStyle("-fx-background-color: rgba(148,96,87,0.2)");
+                }
+            }
+        });
+    }
+    public void pauseTime(Timeline timeline) {
+        if(!isListener) {
+            isPause.textProperty().addListener((observable, oldValue, newValue) -> {
+                if(newValue.equals("true")) {
+                    timeline.play();
+
+                } else {
+                    timeline.pause();
+                }
+            });
+
+            isListener = true;
+        }
+
+    }
+
+
+
+    public void nextTimer() {
     }
 
 }
