@@ -2,26 +2,64 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.main.SettingsPomodoro">
     <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="322.0" minWidth="10.0" prefWidth="168.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="522.0" minWidth="10.0" prefWidth="522.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="322.0" minWidth="10.0" prefWidth="168.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
     </rowConstraints>
     <children>
-      <Slider fx:id="timeSlider" blockIncrement="1.0" majorTickUnit="1.0" max="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minorTickCount="50" prefHeight="33.0" prefWidth="312.0" GridPane.rowIndex="1" />
-      <Label fx:id="time" alignment="CENTER" prefHeight="114.0" prefWidth="166.0" text="25:00">
-         <font>
-            <Font name="Dubai Regular" size="40.0" />
-         </font>
-      </Label>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label alignment="CENTER" layoutX="253.0" layoutY="-7.0" prefHeight="54.0" prefWidth="83.0" text="Work" textFill="#946057">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="253.0" layoutY="60.0" prefHeight="54.0" prefWidth="83.0" text="Break" textFill="#fa5e42">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="253.0" layoutY="127.0" prefHeight="54.0" prefWidth="83.0" text="Long Break" textFill="#3165a0">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="workTime" alignment="CENTER" layoutY="10.0" prefHeight="67.0" prefWidth="106.0" text="25:00" textFill="#8f5d56">
+               <font>
+                  <Font name="Dubai Regular" size="28.0" />
+               </font>
+            </Label>
+            <Slider fx:id="workSlider" blockIncrement="1.0" layoutX="107.0" layoutY="27.0" majorTickUnit="1.0" max="60.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="50" prefHeight="33.0" prefWidth="376.0" styleClass="workSlider" />
+            <Rectangle fx:id="progressBarWork" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="7.0" layoutX="113.0" layoutY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="progressBarWork" width="366.0" />
+            <Label fx:id="breakTime" alignment="CENTER" layoutY="77.0" prefHeight="67.0" prefWidth="106.0" text="25:00" textFill="#fa5e42">
+               <font>
+                  <Font name="Dubai Regular" size="28.0" />
+               </font>
+            </Label>
+            <Slider fx:id="breakSlider" blockIncrement="1.0" layoutX="107.0" layoutY="94.0" majorTickUnit="1.0" max="15.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="1" prefHeight="33.0" prefWidth="376.0" styleClass="breakSlider" />
+            <Rectangle fx:id="progressBarBreak" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="7.0" layoutX="113.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="progressBarBreak" width="366.0" />
+            <Label fx:id="longBreakTime" alignment="CENTER" layoutY="144.0" prefHeight="67.0" prefWidth="106.0" text="25:00" textFill="#3165a0">
+               <font>
+                  <Font name="Dubai Regular" size="28.0" />
+               </font>
+            </Label>
+            <Slider fx:id="longBreakSlider" blockIncrement="1.0" layoutX="107.0" layoutY="161.0" majorTickUnit="1.0" max="20.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="1" prefHeight="33.0" prefWidth="376.0" styleClass="longBreakSlider" />
+            <Rectangle fx:id="progressBarLongBreak" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="7.0" layoutX="113.0" layoutY="174.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="progressBarLongBreak" width="366.0" />
+         </children>
+      </AnchorPane>
     </children>
 </GridPane>

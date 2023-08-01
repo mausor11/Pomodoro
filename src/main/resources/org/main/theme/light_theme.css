@@ -27,3 +27,30 @@
 .doneCount {
     -fx-fill: rgba(148, 96, 87, 0.1);
 }
+.workSlider .track {
+    -fx-background-color: #f4f1f0;
+}
+.workSlider .thumb {
+    -fx-background-color: #946057;
+}
+.progressBarWork {
+    -fx-fill: #946057;
+}
+.breakSlider .track {
+    -fx-background-color: #f4f1f0;
+}
+.breakSlider .thumb {
+    -fx-background-color: #fa5e42;
+}
+.progressBarBreak {
+    -fx-fill: #fa5e42;
+}
+.longBreakSlider .track {
+    -fx-background-color: #f4f1f0;
+}
+.longBreakSlider .thumb {
+    -fx-background-color: #3165a0;
+}
+.progressBarLongBreak {
+    -fx-fill: #3165a0;
+}
