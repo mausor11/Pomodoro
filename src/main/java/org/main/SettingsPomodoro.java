@@ -1,7 +1,5 @@
 package org.main;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -50,35 +48,26 @@ public class SettingsPomodoro {
         breakTime.setText(PomodoroController.pomodoroBreak / 60 + ":00");
         longBreakTime.setText(PomodoroController.pomodoroLongBreak / 60 + ":00");
 
-        workSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                double percentage = (newValue.doubleValue()-1)  / (workSlider.getMax() -1);
-                progressBarWork.setWidth(366 * percentage);
-                PomodoroController.pomodoroTime = newValue.intValue() * 60;
-                setUpTimerWork(newValue.intValue());
-                actTime.setText(newValue.intValue()*60 + "");
-            }
+        workSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            double percentage = (newValue.doubleValue()-1)  / (workSlider.getMax() -1);
+            progressBarWork.setWidth(366 * percentage);
+            PomodoroController.pomodoroTime = newValue.intValue() * 60;
+            setUpTimerWork(newValue.intValue());
+            actTime.setText(newValue.intValue()*60 + "");
         });
-        breakSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                double percentage = (newValue.doubleValue()-1)  / (breakSlider.getMax() -1);
-                progressBarBreak.setWidth(366 * percentage);
-                PomodoroController.pomodoroBreak = newValue.intValue() * 60;
-                setUpTimerBreak(newValue.intValue());
-                actBreak.setText(newValue.intValue()*60 + "");
-            }
+        breakSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            double percentage = (newValue.doubleValue()-1)  / (breakSlider.getMax() -1);
+            progressBarBreak.setWidth(366 * percentage);
+            PomodoroController.pomodoroBreak = newValue.intValue() * 60;
+            setUpTimerBreak(newValue.intValue());
+            actBreak.setText(newValue.intValue()*60 + "");
         });
-        longBreakSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                double percentage = (newValue.doubleValue()-1)  / (longBreakSlider.getMax() -1);
-                progressBarLongBreak.setWidth(366 * percentage);
-                PomodoroController.pomodoroLongBreak = newValue.intValue() * 60;
-                setUpTimerLongBreak(newValue.intValue());
-                actLongBreak.setText(newValue.intValue()*60 + "");
-            }
+        longBreakSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            double percentage = (newValue.doubleValue()-1)  / (longBreakSlider.getMax() -1);
+            progressBarLongBreak.setWidth(366 * percentage);
+            PomodoroController.pomodoroLongBreak = newValue.intValue() * 60;
+            setUpTimerLongBreak(newValue.intValue());
+            actLongBreak.setText(newValue.intValue()*60 + "");
         });
 
     }

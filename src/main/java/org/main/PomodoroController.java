@@ -3,8 +3,6 @@ package org.main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,13 +49,9 @@ public class PomodoroController {
             setUpTimer(pomodoroTime);
         });
 
-        SettingsPomodoro.actBreak.textProperty().addListener((observable, oldValue, newValue) -> {
-            PomodoroController.pomodoroBreak = Integer.parseInt(newValue);
-        });
+        SettingsPomodoro.actBreak.textProperty().addListener((observable, oldValue, newValue) -> PomodoroController.pomodoroBreak = Integer.parseInt(newValue));
 
-        SettingsPomodoro.actLongBreak.textProperty().addListener((observable, oldValue, newValue) -> {
-            PomodoroController.pomodoroLongBreak = Integer.parseInt(newValue);
-        });
+        SettingsPomodoro.actLongBreak.textProperty().addListener((observable, oldValue, newValue) -> PomodoroController.pomodoroLongBreak = Integer.parseInt(newValue));
     }
     public void startTimer(double time) {
         if(pomodoroCount == 0 && isFirst) {
@@ -154,18 +148,10 @@ public class PomodoroController {
     }
     public void switchDone() {
         switch(pomodoroCount) {
-            case 1 -> {
-                firstP.setStyle("-fx-fill: #946057");
-            }
-            case 2 -> {
-                secondP.setStyle("-fx-fill: #946057");
-            }
-            case 3 -> {
-                thirdP.setStyle("-fx-fill: #946057");
-            }
-            case 4 -> {
-                fourthP.setStyle("-fx-fill: #946057");
-            }
+            case 1 -> firstP.setStyle("-fx-fill: #946057");
+            case 2 -> secondP.setStyle("-fx-fill: #946057");
+            case 3 -> thirdP.setStyle("-fx-fill: #946057");
+            case 4 -> fourthP.setStyle("-fx-fill: #946057");
         }
     }
     public void startClock() {
@@ -212,9 +198,7 @@ public class PomodoroController {
         isPaused = false;
         isPause = new Label();
         isListener = false;
-        timeline.setOnFinished((finish) -> {
-            showButtons(true);
-        });
+        timeline.setOnFinished((finish) -> showButtons(true));
     }
     public void showButtons(boolean isStart) {
         if(isStart) {
@@ -257,21 +241,18 @@ public class PomodoroController {
         }
     }
     public void pauseClock(Timeline timeline) {
-        pauseButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if(isPaused) {
-                    timeline.play();
-                    isPaused = false;
-                    isPause.setText("true");
-                    pauseButton.setStyle("-fx-background-color: #f4f1f0;");
+        pauseButton.setOnAction(actionEvent -> {
+            if(isPaused) {
+                timeline.play();
+                isPaused = false;
+                isPause.setText("true");
+                pauseButton.setStyle("-fx-background-color: #f4f1f0;");
 
-                } else {
-                    timeline.pause();
-                    isPaused = true;
-                    isPause.setText("false");
-                    pauseButton.setStyle("-fx-background-color: rgba(148,96,87,0.2)");
-                }
+            } else {
+                timeline.pause();
+                isPaused = true;
+                isPause.setText("false");
+                pauseButton.setStyle("-fx-background-color: rgba(148,96,87,0.2)");
             }
         });
     }
