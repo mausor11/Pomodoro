@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+
+import java.sql.Time;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PomodoroController {
@@ -36,7 +38,7 @@ public class PomodoroController {
     private boolean isLongBreak = false;
     private boolean isPaused = false;
     private boolean isListener = false;
-    public static int pomodoroTime = 1500;
+    public static int pomodoroTime = 5;
     public static int pomodoroBreak = 300;
     public static int pomodoroLongBreak = 600;
     Label isPause = new Label();
@@ -132,7 +134,6 @@ public class PomodoroController {
         );
         timeline.play();
         pauseClock(timeline);
-
         timeline.setOnFinished((finish) -> {
             isLongBreak = false;
             timerLook.setStyle("-fx-fill: #946057");
@@ -177,7 +178,7 @@ public class PomodoroController {
         timeline.setCycleCount(time);
         timeline.play();
         pauseTime(timeline);
-
+//        nextTime(timeline);
     }
     public void setUpTimer(int time) {
         int min = time / 60;
@@ -191,7 +192,7 @@ public class PomodoroController {
     public void resetTimer() {
 
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 0)),
+                new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), timerLook.getLength())),
                 new KeyFrame(Duration.millis(200), new KeyValue(timerLook.lengthProperty(), 360))
         );
         timeline.play();
@@ -261,7 +262,6 @@ public class PomodoroController {
             isPause.textProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue.equals("true")) {
                     timeline.play();
-
                 } else {
                     timeline.pause();
                 }
@@ -269,12 +269,14 @@ public class PomodoroController {
 
             isListener = true;
         }
-
     }
-
-
-
-    public void nextTimer() {
-    }
+    // TO DO
+//    public void nextTime(Timeline timeline) {
+//        nextButton.setOnAction(actionEvent -> {
+//            timeline.stop();
+//            setUpTimer(PomodoroController.pomodoroTime);
+//            timeline.setCycleCount(0);
+//        });
+//    }
 
 }
