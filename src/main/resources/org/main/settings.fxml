@@ -38,6 +38,11 @@
                   <Font name="Dubai Bold" size="15.0" />
                </font>
             </Label>
+            <Label alignment="CENTER" layoutX="253.0" layoutY="194.0" prefHeight="54.0" prefWidth="83.0" text="Rounds" textFill="#738665">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
             <Label fx:id="workTime" alignment="CENTER" layoutY="10.0" prefHeight="67.0" prefWidth="106.0" text="25:00" textFill="#8f5d56">
                <font>
                   <Font name="Dubai Regular" size="28.0" />
@@ -59,6 +64,13 @@
             </Label>
             <Slider fx:id="longBreakSlider" blockIncrement="1.0" layoutX="107.0" layoutY="161.0" majorTickUnit="1.0" max="20.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="1" prefHeight="33.0" prefWidth="376.0" styleClass="longBreakSlider" />
             <Rectangle fx:id="progressBarLongBreak" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="7.0" layoutX="113.0" layoutY="174.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="progressBarLongBreak" width="366.0" />
+            <Label fx:id="roundsNumber" alignment="CENTER" layoutY="211.0" prefHeight="67.0" prefWidth="106.0" text="25:00" textFill="#738665">
+               <font>
+                  <Font name="Dubai Regular" size="28.0" />
+               </font>
+            </Label>
+            <Slider fx:id="roundsSlider" blockIncrement="1.0" layoutX="107.0" layoutY="228.0" majorTickUnit="1.0" max="10.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="1" prefHeight="33.0" prefWidth="376.0" styleClass="roundsSlider" />
+            <Rectangle fx:id="progressBarRounds" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="7.0" layoutX="113.0" layoutY="241.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="progressBarRounds" width="366.0" />
          </children>
       </AnchorPane>
     </children>

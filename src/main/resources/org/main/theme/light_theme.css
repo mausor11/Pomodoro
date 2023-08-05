@@ -54,3 +54,12 @@
 .progressBarLongBreak {
     -fx-fill: #3165a0;
 }
+.roundsSlider .track {
+    -fx-background-color: #f4f1f0;
+}
+.roundsSlider .thumb {
+    -fx-background-color: #738665;
+}
+.progressBarRounds {
+    -fx-fill: #738665;
+}

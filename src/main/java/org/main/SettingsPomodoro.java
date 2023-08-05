@@ -13,40 +13,36 @@ public class SettingsPomodoro {
     @FXML
     Slider longBreakSlider;
     @FXML
+    Slider roundsSlider;
+    @FXML
     Label workTime;
     @FXML
     Label breakTime;
     @FXML
     Label longBreakTime;
     @FXML
+    Label roundsNumber;
+    @FXML
     Rectangle progressBarWork;
     @FXML
     Rectangle progressBarBreak;
     @FXML
     Rectangle progressBarLongBreak;
+    @FXML
+    Rectangle progressBarRounds;
     public static Label actTime = new Label();
     public static Label actBreak = new Label();
     public static Label actLongBreak = new Label();
+    public static Label actRoundsNumber = new Label();
     public void initialize() {
-        progressBarWork.setDisable(true);
-        progressBarBreak.setDisable(true);
-        progressBarLongBreak.setDisable(true);
-
-        workSlider.setValue(PomodoroController.pomodoroTime / 60.0);
-        breakSlider.setValue(PomodoroController.pomodoroBreak / 60.0);
-        longBreakSlider.setValue(PomodoroController.pomodoroLongBreak / 60.0);
-
-        double percentage1 = ((PomodoroController.pomodoroTime / 60.0)  - 1) / (workSlider.getMax() - 1);
-        double percentage2 = ((PomodoroController.pomodoroBreak / 60.0) - 1) / (breakSlider.getMax() - 1);
-        double percentage3 = ((PomodoroController.pomodoroLongBreak / 60.0) - 1) / (longBreakSlider.getMax() - 1);
-
-        progressBarWork.setWidth(366 * percentage1);
-        progressBarBreak.setWidth(366 * percentage2);
-        progressBarLongBreak.setWidth(366 * percentage3);
-
-        workTime.setText(PomodoroController.pomodoroTime / 60 + ":00");
-        breakTime.setText(PomodoroController.pomodoroBreak / 60 + ":00");
-        longBreakTime.setText(PomodoroController.pomodoroLongBreak / 60 + ":00");
+        setUpTimeSlider(progressBarWork, workSlider, PomodoroController.pomodoroTime, workTime);
+        setUpTimeSlider(progressBarBreak, breakSlider, PomodoroController.pomodoroBreak, breakTime);
+        setUpTimeSlider(progressBarLongBreak, longBreakSlider, PomodoroController.pomodoroLongBreak, longBreakTime);
+        progressBarRounds.setDisable(true);
+        roundsSlider.setValue(PomodoroController.pomodoroRounds);
+        double percentage4 = ((PomodoroController.pomodoroRounds) - 1) / (roundsSlider.getMax() - 1);
+        progressBarRounds.setWidth(366 * percentage4);
+        roundsNumber.setText(PomodoroController.pomodoroRounds + "");
 
         workSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             double percentage = (newValue.doubleValue()-1)  / (workSlider.getMax() -1);
@@ -69,16 +65,33 @@ public class SettingsPomodoro {
             setUpTimerLongBreak(newValue.intValue());
             actLongBreak.setText(newValue.intValue()*60 + "");
         });
+        roundsSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            double percentage = (newValue.doubleValue()-1)  / (roundsSlider.getMax() -1);
+            progressBarRounds.setWidth(366 * percentage);
+            PomodoroController.pomodoroRounds = newValue.intValue();
+            setUpRoundsNumber(newValue.intValue());
+            actRoundsNumber.setText(newValue.intValue() + "");
+        });
 
     }
-    public void setUpTimerWork(int time) {
+    private void setUpTimerWork(int time) {
         workTime.setText(time + ":00");
     }
-    public void setUpTimerBreak(int time) {
+    private void setUpTimerBreak(int time) {
         breakTime.setText(time + ":00");
     }
-    public void setUpTimerLongBreak(int time) {
+    private void setUpTimerLongBreak(int time) {
         longBreakTime.setText(time + ":00");
+    }
+    private void setUpRoundsNumber(int number) {
+        roundsNumber.setText(number + "");
+    }
+    private void setUpTimeSlider(Rectangle progressBar, Slider slider, int time, Label timeLabel) {
+        progressBar.setDisable(true);
+        slider.setValue(time / 60.0);
+        double percentage = ((time / 60.0)  - 1) / (slider.getMax() - 1);
+        progressBar.setWidth(366 * percentage);
+        timeLabel.setText(time / 60 + ":00");
     }
 
 }

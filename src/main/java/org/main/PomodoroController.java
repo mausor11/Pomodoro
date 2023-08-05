@@ -4,13 +4,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-import java.sql.Time;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PomodoroController {
@@ -30,8 +33,6 @@ public class PomodoroController {
     Label clock;
     @FXML
     Button pauseButton;
-    @FXML
-    Button nextButton;
     private int pomodoroCount = 0;
     private boolean isFirst = false;
     private boolean isBreak = false;
@@ -39,12 +40,12 @@ public class PomodoroController {
     private boolean isTimer = true;
     private boolean isPaused = false;
     private boolean isListener = false;
-    private boolean isListener2 = false;
-    public static int pomodoroTime = 60;
-    public static int pomodoroBreak = 120;
-    public static int pomodoroLongBreak = 180;
+    public static int pomodoroTime = 1500;
+    public static int pomodoroBreak = 300;
+    public static int pomodoroLongBreak = 900;
+    public static int pomodoroRounds = 2;
+    private int doneRounds = 0;
     Label isPause = new Label();
-    Label isNext = new Label();
 
     public void initialize() {
         clock.setText(PomodoroController.pomodoroTime / 60 + ":00");
@@ -57,8 +58,14 @@ public class PomodoroController {
         SettingsPomodoro.actBreak.textProperty().addListener((observable, oldValue, newValue) -> PomodoroController.pomodoroBreak = Integer.parseInt(newValue));
 
         SettingsPomodoro.actLongBreak.textProperty().addListener((observable, oldValue, newValue) -> PomodoroController.pomodoroLongBreak = Integer.parseInt(newValue));
+
+        SettingsPomodoro.actRoundsNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+            PomodoroController.pomodoroRounds = Integer.parseInt(newValue);
+
+        });
+
     }
-    public void startTimer(double time) {
+    private void startTimer(double time) {
         if(pomodoroCount == 0 && isFirst) {
             showButtons(false);
 
@@ -69,7 +76,6 @@ public class PomodoroController {
             );
             timeline.play();
             pauseClock(timeline);
-            nextClock(timeline);
             timeline.setOnFinished((finish) -> {
                 setUpTimer(pomodoroTime);
                 resetTimer();
@@ -91,7 +97,6 @@ public class PomodoroController {
             );
             timeline.play();
             pauseClock(timeline);
-            nextClock(timeline);
             timeline.setOnFinished((finish) -> {
                 setUpTimer(pomodoroTime);
                 resetTimer();
@@ -116,7 +121,7 @@ public class PomodoroController {
 
         }
     }
-    public void startBreak(double time) {
+    private void startBreak(double time) {
         showButtons(false);
         timerButton.setStyle("-fx-background-color: #efe8e7");
         timerLook.setStyle("-fx-fill: #fa5e42");
@@ -126,7 +131,6 @@ public class PomodoroController {
         );
         timeline.play();
         pauseClock(timeline);
-        nextClock(timeline);
         timeline.setOnFinished((finish) -> {
             isBreak = false;
             isTimer = true;
@@ -144,8 +148,8 @@ public class PomodoroController {
         );
         timeline.play();
         pauseClock(timeline);
-        nextClock(timeline);
         timeline.setOnFinished((finish) -> {
+            System.out.println("done");
             isLongBreak = false;
             isTimer = true;
             timerLook.setStyle("-fx-fill: #946057");
@@ -157,9 +161,13 @@ public class PomodoroController {
                     new KeyFrame(Duration.millis(50), new KeyValue(fourthP.styleProperty(), "-fx-fill: #f4f1f0"))
             );
             animation.play();
+            doneRounds++;
         });
+        if(doneRounds == pomodoroRounds) {
+            System.out.println("done");
+        }
     }
-    public void switchDone() {
+    private void switchDone() {
         switch(pomodoroCount) {
             case 1 -> firstP.setStyle("-fx-fill: #946057");
             case 2 -> secondP.setStyle("-fx-fill: #946057");
@@ -168,22 +176,20 @@ public class PomodoroController {
         }
     }
     public void startClock() {
+        System.out.println(doneRounds + "/" + pomodoroRounds);
         if(isBreak) {
-            System.out.println("break");
             startBreak(PomodoroController.pomodoroBreak);
             startTime(PomodoroController.pomodoroBreak);
         } else if(isLongBreak) {
-            System.out.println("longBreak");
             startLongBreak(PomodoroController.pomodoroLongBreak);
             startTime(PomodoroController.pomodoroLongBreak);
         } else if(isTimer) {
-            System.out.println("timer");
             startTime(PomodoroController.pomodoroTime);
             startTimer(PomodoroController.pomodoroTime);
         }
 
     }
-    public void startTime(int time) {
+    private void startTime(int time) {
         AtomicInteger k = new AtomicInteger(time - 1);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             setUpTimer(k.get());
@@ -193,10 +199,9 @@ public class PomodoroController {
         timeline.setCycleCount(time);
         timeline.play();
         pauseTime(timeline);
-        nextTime(timeline);
 
     }
-    public void setUpTimer(int time) {
+    private void setUpTimer(int time) {
         int min = time / 60;
         int sec = time % 60;
         if(sec < 10) {
@@ -205,7 +210,7 @@ public class PomodoroController {
             clock.setText(min + ":" + sec);
         }
     }
-    public void resetTimer() {
+    private void resetTimer() {
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), timerLook.getLength())),
@@ -214,53 +219,44 @@ public class PomodoroController {
         timeline.play();
         isPaused = false;
         isPause = new Label();
-        isNext = new Label();
         isListener = false;
-        isListener2 = false;
         timeline.setOnFinished((finish) -> showButtons(true));
     }
-    public Timeline showButtons(boolean isStart) {
+    private void showButtons(boolean isStart) {
         if(isStart) {
             timerButton.setDisable(false);
             pauseButton.setDisable(true);
-            nextButton.setDisable(true);
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(timerButton.opacityProperty(), 0)),
                     new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.opacityProperty(), 1)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.opacityProperty(), 1)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.layoutXProperty(), 143)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.layoutXProperty(), 201)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerButton.prefWidthProperty(), pauseButton.getPrefWidth())),
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerButton.layoutXProperty(), timerButton.getLayoutX())),
 
                     new KeyFrame(Duration.millis(100), new KeyValue(timerButton.opacityProperty(), 1)),
                     new KeyFrame(Duration.millis(100), new KeyValue(pauseButton.opacityProperty(), 0)),
-                    new KeyFrame(Duration.millis(100), new KeyValue(nextButton.opacityProperty(), 0)),
-                    new KeyFrame(Duration.millis(200), new KeyValue(pauseButton.layoutXProperty(), 148)),
-                    new KeyFrame(Duration.millis(200), new KeyValue(nextButton.layoutXProperty(), 196))
+                    new KeyFrame(Duration.millis(50), new KeyValue(timerButton.prefWidthProperty(), pauseButton.getPrefWidth() + 48)),
+                    new KeyFrame(Duration.millis(50), new KeyValue(timerButton.layoutXProperty(), timerButton.getLayoutX() - 24))
             );
             timeline.play();
-            return timeline;
         } else {
             timerButton.setDisable(true);
             pauseButton.setDisable(false);
-            nextButton.setDisable(false);
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(timerButton.opacityProperty(), 1)),
                     new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.opacityProperty(), 0)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.opacityProperty(), 0)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(pauseButton.layoutXProperty(), 148)),
-                    new KeyFrame(Duration.ZERO, new KeyValue(nextButton.layoutXProperty(), 196)),
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerButton.prefWidthProperty(), timerButton.getPrefWidth())),
+                    new KeyFrame(Duration.ZERO, new KeyValue(timerButton.layoutXProperty(), timerButton.getLayoutX())),
 
-                    new KeyFrame(Duration.millis(200), new KeyValue(timerButton.opacityProperty(), 0)),
-                    new KeyFrame(Duration.millis(200), new KeyValue(pauseButton.opacityProperty(), 1)),
-                    new KeyFrame(Duration.millis(200), new KeyValue(nextButton.opacityProperty(), 1)),
-                    new KeyFrame(Duration.millis(200), new KeyValue(pauseButton.layoutXProperty(), 143)),
-                    new KeyFrame(Duration.millis(200), new KeyValue(nextButton.layoutXProperty(), 201))
+                    new KeyFrame(Duration.millis(100), new KeyValue(timerButton.opacityProperty(), 0)),
+                    new KeyFrame(Duration.millis(100), new KeyValue(pauseButton.opacityProperty(), 1)),
+                    new KeyFrame(Duration.millis(100), new KeyValue(timerButton.prefWidthProperty(), pauseButton.getPrefWidth())),
+                    new KeyFrame(Duration.millis(100), new KeyValue(timerButton.layoutXProperty(), timerButton.getLayoutX() + 24))
+
             );
             timeline.play();
-            return timeline;
         }
     }
-    public void pauseClock(Timeline timeline) {
+    private void pauseClock(Timeline timeline) {
         pauseButton.setOnAction(actionEvent -> {
             if(isPaused) {
                 timeline.play();
@@ -276,7 +272,7 @@ public class PomodoroController {
             }
         });
     }
-    public void pauseTime(Timeline timeline) {
+    private void pauseTime(Timeline timeline) {
         if(!isListener) {
             isPause.textProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue.equals("true")) {
@@ -285,55 +281,9 @@ public class PomodoroController {
                     timeline.pause();
                 }
             });
-
             isListener = true;
         }
     }
-    //nie dziala
-    public void nextClock(Timeline timeline) {
-        nextButton.setOnAction(actionEvent -> {
-            System.out.println(pomodoroCount);
-            timeline.stop();
-            timerLook.setLength(360);
-            timerLook.setStyle("-fx-fill: #fa5e42");
-            if(pomodoroCount == 4) {
-                isLongBreak = true;
-                isTimer = false;
-                isBreak = false;
-                pomodoroCount = 0;
-            } else {
-                if(isTimer) {
-                    isLongBreak = false;
-                    isTimer = false;
-                    isBreak = true;
-                    pomodoroCount++;
-                } else {
-                    isLongBreak = false;
-                    isTimer = true;
-                    isBreak = false;
-                }
-            }
-            isNext.setText("true");
-            resetTimer();
-        });
-    }
-    public void nextTime(Timeline timeline) {
-        if(!isListener2) {
-            isNext.textProperty().addListener((observable, oldValue, newValue) ->{
-                if(newValue.equals("true")) {
-                    timeline.stop();
-                    if(isTimer) {
-                        setUpTimer(pomodoroTime);
-                    } else if(isBreak) {
-                        setUpTimer(pomodoroBreak);
-                    } else {
-                        setUpTimer(pomodoroLongBreak);
-                    }
-                } else {
-                    System.out.println("A");
-                }
-            });
-            isListener2 = true;
-        }
-    }
+
+
 }
