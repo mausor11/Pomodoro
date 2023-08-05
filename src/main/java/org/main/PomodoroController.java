@@ -36,12 +36,15 @@ public class PomodoroController {
     private boolean isFirst = false;
     private boolean isBreak = false;
     private boolean isLongBreak = false;
+    private boolean isTimer = true;
     private boolean isPaused = false;
     private boolean isListener = false;
-    public static int pomodoroTime = 5;
-    public static int pomodoroBreak = 300;
-    public static int pomodoroLongBreak = 600;
+    private boolean isListener2 = false;
+    public static int pomodoroTime = 60;
+    public static int pomodoroBreak = 120;
+    public static int pomodoroLongBreak = 180;
     Label isPause = new Label();
+    Label isNext = new Label();
 
     public void initialize() {
         clock.setText(PomodoroController.pomodoroTime / 60 + ":00");
@@ -66,6 +69,7 @@ public class PomodoroController {
             );
             timeline.play();
             pauseClock(timeline);
+            nextClock(timeline);
             timeline.setOnFinished((finish) -> {
                 setUpTimer(pomodoroTime);
                 resetTimer();
@@ -73,6 +77,7 @@ public class PomodoroController {
                 pomodoroCount++;
                 switchDone();
                 isBreak = true;
+                isTimer = false;
                 timerLook.setStyle("-fx-fill: #fa5e42");
                 clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
 
@@ -86,14 +91,15 @@ public class PomodoroController {
             );
             timeline.play();
             pauseClock(timeline);
+            nextClock(timeline);
             timeline.setOnFinished((finish) -> {
                 setUpTimer(pomodoroTime);
                 resetTimer();
                 timerButton.setStyle("-fx-background-color: #f4f1f0");
                 pomodoroCount++;
-
                 if (pomodoroCount == 4) {
                     isLongBreak = true;
+                    isTimer = false;
                     timerLook.setStyle("-fx-fill: #3165a0");
                     clock.setText(PomodoroController.pomodoroLongBreak / 60 + ":00");
                     switchDone();
@@ -102,10 +108,12 @@ public class PomodoroController {
                 } else {
                     switchDone();
                     isBreak = true;
+                    isTimer = false;
                     timerLook.setStyle("-fx-fill: #fa5e42");
                     clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
                 }
             });
+
         }
     }
     public void startBreak(double time) {
@@ -118,8 +126,10 @@ public class PomodoroController {
         );
         timeline.play();
         pauseClock(timeline);
+        nextClock(timeline);
         timeline.setOnFinished((finish) -> {
             isBreak = false;
+            isTimer = true;
             timerLook.setStyle("-fx-fill: #946057");
             resetTimer();
         });
@@ -134,8 +144,10 @@ public class PomodoroController {
         );
         timeline.play();
         pauseClock(timeline);
+        nextClock(timeline);
         timeline.setOnFinished((finish) -> {
             isLongBreak = false;
+            isTimer = true;
             timerLook.setStyle("-fx-fill: #946057");
             resetTimer();
             Timeline animation = new Timeline(
@@ -157,12 +169,15 @@ public class PomodoroController {
     }
     public void startClock() {
         if(isBreak) {
+            System.out.println("break");
             startBreak(PomodoroController.pomodoroBreak);
             startTime(PomodoroController.pomodoroBreak);
         } else if(isLongBreak) {
+            System.out.println("longBreak");
             startLongBreak(PomodoroController.pomodoroLongBreak);
             startTime(PomodoroController.pomodoroLongBreak);
-        } else {
+        } else if(isTimer) {
+            System.out.println("timer");
             startTime(PomodoroController.pomodoroTime);
             startTimer(PomodoroController.pomodoroTime);
         }
@@ -178,7 +193,8 @@ public class PomodoroController {
         timeline.setCycleCount(time);
         timeline.play();
         pauseTime(timeline);
-//        nextTime(timeline);
+        nextTime(timeline);
+
     }
     public void setUpTimer(int time) {
         int min = time / 60;
@@ -198,10 +214,12 @@ public class PomodoroController {
         timeline.play();
         isPaused = false;
         isPause = new Label();
+        isNext = new Label();
         isListener = false;
+        isListener2 = false;
         timeline.setOnFinished((finish) -> showButtons(true));
     }
-    public void showButtons(boolean isStart) {
+    public Timeline showButtons(boolean isStart) {
         if(isStart) {
             timerButton.setDisable(false);
             pauseButton.setDisable(true);
@@ -220,6 +238,7 @@ public class PomodoroController {
                     new KeyFrame(Duration.millis(200), new KeyValue(nextButton.layoutXProperty(), 196))
             );
             timeline.play();
+            return timeline;
         } else {
             timerButton.setDisable(true);
             pauseButton.setDisable(false);
@@ -238,7 +257,7 @@ public class PomodoroController {
                     new KeyFrame(Duration.millis(200), new KeyValue(nextButton.layoutXProperty(), 201))
             );
             timeline.play();
-
+            return timeline;
         }
     }
     public void pauseClock(Timeline timeline) {
@@ -270,13 +289,51 @@ public class PomodoroController {
             isListener = true;
         }
     }
-    // TO DO
-//    public void nextTime(Timeline timeline) {
-//        nextButton.setOnAction(actionEvent -> {
-//            timeline.stop();
-//            setUpTimer(PomodoroController.pomodoroTime);
-//            timeline.setCycleCount(0);
-//        });
-//    }
-
+    //nie dziala
+    public void nextClock(Timeline timeline) {
+        nextButton.setOnAction(actionEvent -> {
+            System.out.println(pomodoroCount);
+            timeline.stop();
+            timerLook.setLength(360);
+            timerLook.setStyle("-fx-fill: #fa5e42");
+            if(pomodoroCount == 4) {
+                isLongBreak = true;
+                isTimer = false;
+                isBreak = false;
+                pomodoroCount = 0;
+            } else {
+                if(isTimer) {
+                    isLongBreak = false;
+                    isTimer = false;
+                    isBreak = true;
+                    pomodoroCount++;
+                } else {
+                    isLongBreak = false;
+                    isTimer = true;
+                    isBreak = false;
+                }
+            }
+            isNext.setText("true");
+            resetTimer();
+        });
+    }
+    public void nextTime(Timeline timeline) {
+        if(!isListener2) {
+            isNext.textProperty().addListener((observable, oldValue, newValue) ->{
+                if(newValue.equals("true")) {
+                    timeline.stop();
+                    if(isTimer) {
+                        setUpTimer(pomodoroTime);
+                    } else if(isBreak) {
+                        setUpTimer(pomodoroBreak);
+                    } else {
+                        setUpTimer(pomodoroLongBreak);
+                    }
+                } else {
+                    System.out.println("A");
+                }
+            });
+            isListener2 = true;
+        }
+    }
 }
