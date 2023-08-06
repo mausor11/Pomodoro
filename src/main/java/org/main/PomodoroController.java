@@ -33,6 +33,14 @@ public class PomodoroController {
     Label clock;
     @FXML
     Button pauseButton;
+    @FXML
+    Group counterLook;
+    @FXML
+    Arc counterCircle;
+    @FXML
+    Circle whiteBackgroundRounds;
+    @FXML
+    Circle backgroundRounds;
     private int pomodoroCount = 0;
     private boolean isFirst = false;
     private boolean isBreak = false;
@@ -40,14 +48,15 @@ public class PomodoroController {
     private boolean isTimer = true;
     private boolean isPaused = false;
     private boolean isListener = false;
-    public static int pomodoroTime = 1500;
-    public static int pomodoroBreak = 300;
-    public static int pomodoroLongBreak = 900;
+    public static int pomodoroTime = 1;
+    public static int pomodoroBreak = 1;
+    public static int pomodoroLongBreak = 1;
     public static int pomodoroRounds = 2;
     private int doneRounds = 0;
     Label isPause = new Label();
 
     public void initialize() {
+        initializeCircleRounds(pomodoroRounds);
         clock.setText(PomodoroController.pomodoroTime / 60 + ":00");
 
         SettingsPomodoro.actTime.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -61,6 +70,7 @@ public class PomodoroController {
 
         SettingsPomodoro.actRoundsNumber.textProperty().addListener((observable, oldValue, newValue) -> {
             PomodoroController.pomodoroRounds = Integer.parseInt(newValue);
+            initializeCircleRounds(pomodoroRounds);
 
         });
 
@@ -162,9 +172,11 @@ public class PomodoroController {
             );
             animation.play();
             doneRounds++;
+            switchDoneRound(doneRounds, pomodoroRounds);
         });
         if(doneRounds == pomodoroRounds) {
-            System.out.println("done");
+            switchDoneRound(doneRounds, pomodoroRounds);
+            doneRounds = 0;
         }
     }
     private void switchDone() {
@@ -282,6 +294,41 @@ public class PomodoroController {
                 }
             });
             isListener = true;
+        }
+    }
+    private void initializeCircleRounds(int many) {
+
+        counterLook.getChildren().clear();
+        counterLook.getChildren().addAll(backgroundRounds, counterCircle, whiteBackgroundRounds);
+        if(many != 1) {
+            double arc = 360.0 / many;
+            for(int i=0; i< many;i++) {
+                Rectangle rectangle = new Rectangle(10, 172);
+                rectangle.setLayoutX(-5);
+                rectangle.setLayoutY(-172);
+                rectangle.setFill(Color.WHITE);
+                Rotate rotate = new Rotate(arc*i, 5, 172);
+                rectangle.getTransforms().add(rotate);
+                counterLook.getChildren().add(rectangle);
+            }
+            counterCircle.setLength(360.0 - arc*doneRounds);
+        }
+
+    }
+
+
+
+    private void switchDoneRound(int stage, int many) {
+
+        if(stage != many) {
+            double arc = 360 / many;
+            counterCircle.setLength(360.0 - arc*stage);
+        } else {
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(counterCircle.lengthProperty(), 0)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(counterCircle.lengthProperty(), 360))
+            );
+            timeline.play();
         }
     }
 
