@@ -73,6 +73,21 @@ public class SettingsPomodoro {
             actRoundsNumber.setText(newValue.intValue() + "");
         });
 
+        PomodoroController.pomodoroOn.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.equals("on")) {
+                workSlider.setDisable(true);
+                breakSlider.setDisable(true);
+                longBreakSlider.setDisable(true);
+                roundsSlider.setDisable(true);
+            } else {
+                workSlider.setDisable(false);
+                breakSlider.setDisable(false);
+                longBreakSlider.setDisable(false);
+                roundsSlider.setDisable(false);
+            }
+        });
+
+
     }
     private void setUpTimerWork(int time) {
         workTime.setText(time + ":00");

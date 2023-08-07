@@ -15,21 +15,19 @@ public class Controller {
     @FXML
     Label menuLabel;
     @FXML
-    Label statsLabel;
-    @FXML
     Label optionsLabel;
 
     @FXML
     ImageView menuIcon;
     @FXML
-    ImageView statsIcon;
-    @FXML
     ImageView optionsIcon;
     private int prevFocus;
     private int focusOn;
     GridPane pomodoro;
+    GridPane settings;
     public void initialize() throws IOException {
         pomodoro = new FXMLLoader(getClass().getResource("pomodoro.fxml")).load();
+        settings = new FXMLLoader(getClass().getResource("settings.fxml")).load();
         container.add(pomodoro, 1, 0);
         menuLabel.getStyleClass().remove("menuLabel");
         menuLabel.getStyleClass().add("menuLabelFocused");
@@ -41,11 +39,6 @@ public class Controller {
         changeFocus(prevFocus, focusOn);
         prevFocus = 0;
     }
-    public void focusStats() throws IOException {
-        focusOn = 1;
-        changeFocus(prevFocus, focusOn);
-        prevFocus = 1;
-    }
     public void focusOptions() throws IOException {
         focusOn = 2;
         changeFocus(prevFocus, focusOn);
@@ -56,28 +49,23 @@ public class Controller {
         switch(prevFocus) {
             case 0 -> {
                 menuLabel.getStyleClass().remove("menuLabelFocused");
-                statsLabel.getStyleClass().remove("menuLabel");
                 optionsLabel.getStyleClass().remove("menuLabel");
             }
             case 1 -> {
                 menuLabel.getStyleClass().remove("menuLabel");
-                statsLabel.getStyleClass().remove("menuLabelFocused");
                 optionsLabel.getStyleClass().remove("menuLabel");
             }
             case 2 -> {
                 menuLabel.getStyleClass().remove("menuLabel");
-                statsLabel.getStyleClass().remove("menuLabel");
                 optionsLabel.getStyleClass().remove("menuLabelFocused");
             }
         }
         switch(focusOn) {
             case 0 -> {
                 menuLabel.getStyleClass().add("menuLabelFocused");
-                statsLabel.getStyleClass().add("menuLabel");
                 optionsLabel.getStyleClass().add("menuLabel");
 
                 menuIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/timerF.png")).toExternalForm()));
-                statsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/stats.png")).toExternalForm()));
                 optionsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/settings.png")).toExternalForm()));
 
                 container.getChildren().remove(1);
@@ -86,11 +74,9 @@ public class Controller {
             }
             case 1 -> {
                 menuLabel.getStyleClass().add("menuLabel");
-                statsLabel.getStyleClass().add("menuLabelFocused");
                 optionsLabel.getStyleClass().add("menuLabel");
 
                 menuIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/timer.png")).toExternalForm()));
-                statsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/statsF.png")).toExternalForm()));
                 optionsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/settings.png")).toExternalForm()));
 
                 container.getChildren().remove(1);
@@ -98,15 +84,13 @@ public class Controller {
             }
             case 2 -> {
                 menuLabel.getStyleClass().add("menuLabel");
-                statsLabel.getStyleClass().add("menuLabel");
                 optionsLabel.getStyleClass().add("menuLabelFocused");
 
                 menuIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/timer.png")).toExternalForm()));
-                statsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/stats.png")).toExternalForm()));
                 optionsIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("img/settingsF.png")).toExternalForm()));
 
                 container.getChildren().remove(1);
-                container.add(new FXMLLoader(getClass().getResource("settings.fxml")).load(), 1, 0);
+                container.add(settings, 1, 0);
             }
         }
     }

@@ -54,6 +54,7 @@ public class PomodoroController {
     public static int pomodoroRounds = 2;
     private int doneRounds = 0;
     Label isPause = new Label();
+    public static Label pomodoroOn = new Label();
 
     public void initialize() {
         initializeCircleRounds(pomodoroRounds);
@@ -99,6 +100,7 @@ public class PomodoroController {
 
             });
         } else {
+            pomodoroOn.setText("on");
             showButtons(false);
             timerButton.setStyle("-fx-background-color: #efe8e7");
             Timeline timeline = new Timeline(
@@ -159,7 +161,6 @@ public class PomodoroController {
         timeline.play();
         pauseClock(timeline);
         timeline.setOnFinished((finish) -> {
-            System.out.println("done");
             isLongBreak = false;
             isTimer = true;
             timerLook.setStyle("-fx-fill: #946057");
@@ -172,12 +173,16 @@ public class PomodoroController {
             );
             animation.play();
             doneRounds++;
-            switchDoneRound(doneRounds, pomodoroRounds);
+            if(doneRounds == pomodoroRounds) {
+                switchDoneRound(doneRounds, pomodoroRounds);
+                doneRounds = 0;
+                pomodoroOn.setText("off");
+
+            } else {
+                switchDoneRound(doneRounds, pomodoroRounds);
+            }
         });
-        if(doneRounds == pomodoroRounds) {
-            switchDoneRound(doneRounds, pomodoroRounds);
-            doneRounds = 0;
-        }
+
     }
     private void switchDone() {
         switch(pomodoroCount) {
