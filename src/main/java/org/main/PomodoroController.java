@@ -48,9 +48,9 @@ public class PomodoroController {
     private boolean isTimer = true;
     private boolean isPaused = false;
     private boolean isListener = false;
-    public static int pomodoroTime = 1;
-    public static int pomodoroBreak = 1;
-    public static int pomodoroLongBreak = 1;
+    public static int pomodoroTime = 1500;
+    public static int pomodoroBreak = 300;
+    public static int pomodoroLongBreak = 900;
     public static int pomodoroRounds = 2;
     private int doneRounds = 0;
     Label isPause = new Label();
@@ -77,8 +77,9 @@ public class PomodoroController {
 
     }
     private void startTimer(double time) {
+        showButtons(false);
+
         if(pomodoroCount == 0 && isFirst) {
-            showButtons(false);
 
             timerButton.setStyle("-fx-background-color: #efe8e7");
             Timeline timeline = new Timeline(
@@ -101,7 +102,6 @@ public class PomodoroController {
             });
         } else {
             pomodoroOn.setText("on");
-            showButtons(false);
             timerButton.setStyle("-fx-background-color: #efe8e7");
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(timerLook.lengthProperty(), 360)),
@@ -193,7 +193,6 @@ public class PomodoroController {
         }
     }
     public void startClock() {
-        System.out.println(doneRounds + "/" + pomodoroRounds);
         if(isBreak) {
             startBreak(PomodoroController.pomodoroBreak);
             startTime(PomodoroController.pomodoroBreak);
@@ -324,10 +323,14 @@ public class PomodoroController {
 
 
     private void switchDoneRound(int stage, int many) {
-
         if(stage != many) {
-            double arc = 360 / many;
-            counterCircle.setLength(360.0 - arc*stage);
+            double arc = 360.0 / many;
+            counterCircle.setLength(360.0 - arc*(stage-1));
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(counterCircle.lengthProperty(), counterCircle.getLength())),
+                    new KeyFrame(Duration.millis(200), new KeyValue(counterCircle.lengthProperty(), 360.0 - arc*stage))
+            );
+            timeline.play();
         } else {
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(counterCircle.lengthProperty(), 0)),
