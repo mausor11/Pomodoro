@@ -48,9 +48,9 @@ public class PomodoroController {
     private boolean isTimer = true;
     private boolean isPaused = false;
     private boolean isListener = false;
-    public static int pomodoroTime = 1500;
-    public static int pomodoroBreak = 300;
-    public static int pomodoroLongBreak = 900;
+    public static int pomodoroTime = 1;
+    public static int pomodoroBreak = 1;
+    public static int pomodoroLongBreak = 1;
     public static int pomodoroRounds = 2;
     private int doneRounds = 0;
     Label isPause = new Label();
@@ -150,7 +150,7 @@ public class PomodoroController {
             resetTimer();
         });
     }
-    public void startLongBreak(double time) {
+    private void startLongBreak(double time) {
         showButtons(false);
         timerButton.setStyle("-fx-background-color: #efe8e7");
         timerLook.setStyle("-fx-fill: #3165a0");

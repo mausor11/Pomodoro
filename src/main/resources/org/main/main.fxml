@@ -11,54 +11,54 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.main.Controller">
-  <columnConstraints>
-    <ColumnConstraints maxWidth="-Infinity" minWidth="10.0" prefWidth="250.0" />
-    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="menu">
-         <children>
-            <AnchorPane onMouseClicked="#focusTimer" prefHeight="100.0">
-               <children>
-                  <ImageView fx:id="menuIcon" fitHeight="36.0" fitWidth="36.0" layoutX="34.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="timerIcon" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="32.0">
-                     <image>
-                        <Image url="@img/timer.png" />
-                     </image></ImageView>
-                  <Label fx:id="menuLabel" layoutX="70.0" layoutY="42.0" styleClass="menuLabel" text="Timer" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font name="Dubai Regular" size="26.0" />
-                     </font>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding></Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane onMouseClicked="#focusOptions" prefHeight="100.0">
-               <children>
-                  <ImageView fx:id="optionsIcon" fitHeight="36.0" fitWidth="36.0" layoutX="34.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="settingsIcon" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="32.0">
-                     <image>
-                        <Image url="@img/settings.png" />
-                     </image></ImageView>
-                  <Label fx:id="optionsLabel" layoutX="70.0" layoutY="42.0" styleClass="menuLabel" text="Options" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font name="Dubai Regular" size="26.0" />
-                     </font>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding></Label>
-               </children>
-            </AnchorPane>
-         </children>
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-   </children>
+<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/null"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.main.Controller">
+   <columnConstraints>
+      <ColumnConstraints maxWidth="-Infinity" minWidth="10.0" prefWidth="250.0"/>
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+   </rowConstraints>
+   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="menu">
+      <GridPane.margin>
+         <Insets/>
+      </GridPane.margin>
+      <opaqueInsets>
+         <Insets/>
+      </opaqueInsets>
+      <AnchorPane onMouseClicked="#focusTimer" prefHeight="100.0">
+         <ImageView fx:id="menuIcon" fitHeight="36.0" fitWidth="36.0" layoutX="34.0" layoutY="32.0"
+                    pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="32.0"
+                    AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="32.0">
+            <Image url="@img/timer.png"/>
+         </ImageView>
+         <Label fx:id="menuLabel" layoutX="70.0" layoutY="42.0" styleClass="menuLabel" text="Timer"
+                AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+               <Font name="Dubai Regular" size="26.0"/>
+            </font>
+            <padding>
+               <Insets left="20.0"/>
+            </padding>
+         </Label>
+      </AnchorPane>
+      <AnchorPane onMouseClicked="#focusOptions" prefHeight="100.0">
+         <ImageView fx:id="optionsIcon" fitHeight="36.0" fitWidth="36.0" layoutX="34.0" layoutY="32.0"
+                    pickOnBounds="true" preserveRatio="true"
+                    AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="32.0">
+            <Image url="@img/settings.png"/>
+         </ImageView>
+         <Label fx:id="optionsLabel" layoutX="70.0" layoutY="42.0" styleClass="menuLabel" text="Options"
+                AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+               <Font name="Dubai Regular" size="26.0"/>
+            </font>
+            <padding>
+               <Insets left="20.0"/>
+            </padding>
+         </Label>
+      </AnchorPane>
+   </VBox>
 </GridPane>

@@ -11,50 +11,60 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.main.PomodoroController">
-  <columnConstraints>
-    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="322.0" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="391.0" minWidth="10.0" prefWidth="391.0" />
-      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="322.0" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="395.0" minHeight="10.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="710.0" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
-  </rowConstraints>
-   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="391.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <Group fx:id="counterLook" layoutX="196.0" layoutY="172.0">
-               <children>
-                  <Circle fx:id="backgroundRounds" fill="DODGERBLUE" radius="170.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="backgroundRounds" />
-                  <Arc fx:id="counterCircle" fill="WHITE" length="360.0" radiusX="172.0" radiusY="172.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" type="ROUND" />
-                  <Circle fx:id="whiteBackgroundRounds" fill="WHITE" radius="161.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-               </children>
-            </Group>
-            <Circle fill="DODGERBLUE" layoutX="196.0" layoutY="172.0" radius="158.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="backgroundPomodoro" />
-            <Arc fx:id="timerLook" fill="DODGERBLUE" layoutX="196.0" layoutY="172.0" length="360.0" radiusX="158.0" radiusY="158.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="timerLook" type="ROUND" />
-            <Circle fill="WHITE" layoutX="196.0" layoutY="172.0" radius="145.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fx:id="firstP" fill="DODGERBLUE" layoutX="160.0" layoutY="359.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount" />
-            <Circle fx:id="secondP" fill="DODGERBLUE" layoutX="184.0" layoutY="359.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount" />
-            <Circle fx:id="thirdP" fill="DODGERBLUE" layoutX="208.0" layoutY="359.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount" />
-            <Circle fx:id="fourthP" fill="DODGERBLUE" layoutX="232.0" layoutY="359.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount" />
-            <Label fx:id="clock" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="123.0" prefHeight="98.0" prefWidth="290.0" text="25:00" textFill="#06090a">
-               <font>
-                  <Font name="Dubai Regular" size="55.0" />
-               </font>
-            </Label>
-            <Button fx:id="timerButton" layoutX="148.0" layoutY="237.0" mnemonicParsing="false" onAction="#startClock" prefHeight="35.0" prefWidth="96.0" styleClass="startButton" text="Start">
-               <font>
-                  <Font name="Dubai Regular" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="pauseButton" disable="true" layoutX="168.0" layoutY="237.0" mnemonicParsing="false" opacity="0.0" prefHeight="35.0" prefWidth="48.0" styleClass="startButton" text="⏸">
-               <font>
-                  <Font name="Dubai Regular" size="18.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-   </children>
+<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/null"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.main.PomodoroController">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="322.0" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="391.0" minWidth="10.0" prefWidth="391.0"/>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="322.0" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="395.0" minHeight="10.0" vgrow="ALWAYS"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS"/>
+        <RowConstraints maxHeight="710.0" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <AnchorPane prefHeight="200.0" prefWidth="391.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Group fx:id="counterLook" layoutX="196.0" layoutY="172.0">
+            <Circle fx:id="backgroundRounds" fill="DODGERBLUE" radius="170.0" stroke="BLACK" strokeType="INSIDE"
+                    strokeWidth="0.0" styleClass="backgroundRounds"/>
+            <Arc fx:id="counterCircle" fill="WHITE" length="360.0" radiusX="172.0" radiusY="172.0"
+                 startAngle="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" type="ROUND"/>
+            <Circle fx:id="whiteBackgroundRounds" fill="WHITE" radius="161.0" stroke="BLACK" strokeType="INSIDE"
+                    strokeWidth="0.0"/>
+        </Group>
+        <Circle fill="DODGERBLUE" layoutX="196.0" layoutY="172.0" radius="158.0" stroke="BLACK" strokeType="INSIDE"
+                strokeWidth="0.0" styleClass="backgroundPomodoro"/>
+        <Arc fx:id="timerLook" fill="DODGERBLUE" layoutX="196.0" layoutY="172.0" length="360.0" radiusX="158.0"
+             radiusY="158.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"
+             styleClass="timerLook" type="ROUND"/>
+        <Circle fill="WHITE" layoutX="196.0" layoutY="172.0" radius="145.0" stroke="BLACK" strokeType="INSIDE"
+                strokeWidth="0.0"/>
+        <Circle fx:id="firstP" fill="DODGERBLUE" layoutX="160.0" layoutY="359.0" radius="8.0" stroke="BLACK"
+                strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount"/>
+        <Circle fx:id="secondP" fill="DODGERBLUE" layoutX="184.0" layoutY="359.0" radius="8.0" stroke="BLACK"
+                strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount"/>
+        <Circle fx:id="thirdP" fill="DODGERBLUE" layoutX="208.0" layoutY="359.0" radius="8.0" stroke="BLACK"
+                strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount"/>
+        <Circle fx:id="fourthP" fill="DODGERBLUE" layoutX="232.0" layoutY="359.0" radius="8.0" stroke="BLACK"
+                strokeType="INSIDE" strokeWidth="0.0" styleClass="doneCount"/>
+        <Label fx:id="clock" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="123.0"
+               prefHeight="98.0" prefWidth="290.0" text="25:00" textFill="#06090a">
+            <font>
+                <Font name="Dubai Regular" size="55.0"/>
+            </font>
+        </Label>
+        <Button fx:id="timerButton" layoutX="148.0" layoutY="237.0" mnemonicParsing="false" onAction="#startClock"
+                prefHeight="35.0" prefWidth="96.0" styleClass="startButton" text="Start">
+            <font>
+                <Font name="Dubai Regular" size="18.0"/>
+            </font>
+        </Button>
+        <Button fx:id="pauseButton" disable="true" layoutX="168.0" layoutY="237.0" mnemonicParsing="false"
+                opacity="0.0" prefHeight="35.0" prefWidth="48.0" styleClass="startButton" text="⏸">
+            <font>
+                <Font name="Dubai Regular" size="18.0"/>
+            </font>
+        </Button>
+    </AnchorPane>
 </GridPane>
