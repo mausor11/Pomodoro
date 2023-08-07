@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
@@ -14,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PomodoroController {
@@ -48,9 +51,9 @@ public class PomodoroController {
     private boolean isTimer = true;
     private boolean isPaused = false;
     private boolean isListener = false;
-    public static int pomodoroTime = 1;
-    public static int pomodoroBreak = 1;
-    public static int pomodoroLongBreak = 1;
+    public static int pomodoroTime = 1500;
+    public static int pomodoroBreak = 300;
+    public static int pomodoroLongBreak = 900;
     public static int pomodoroRounds = 2;
     private int doneRounds = 0;
     Label isPause = new Label();
@@ -98,6 +101,7 @@ public class PomodoroController {
                 isTimer = false;
                 timerLook.setStyle("-fx-fill: #fa5e42");
                 clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
+                getAlert();
 
             });
         } else {
@@ -129,6 +133,7 @@ public class PomodoroController {
                     timerLook.setStyle("-fx-fill: #fa5e42");
                     clock.setText(PomodoroController.pomodoroBreak / 60 + ":00");
                 }
+                getAlert();
             });
 
         }
@@ -148,6 +153,8 @@ public class PomodoroController {
             isTimer = true;
             timerLook.setStyle("-fx-fill: #946057");
             resetTimer();
+            getAlert();
+
         });
     }
     private void startLongBreak(double time) {
@@ -181,6 +188,7 @@ public class PomodoroController {
             } else {
                 switchDoneRound(doneRounds, pomodoroRounds);
             }
+            getAlert();
         });
 
     }
@@ -338,6 +346,12 @@ public class PomodoroController {
             );
             timeline.play();
         }
+    }
+    private void getAlert() {
+        String path = Objects.requireNonNull(PomodoroController.class.getResource("media/alert2.mp3")).toString();
+        Media media = new Media(path);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
 
